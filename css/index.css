@@ -49,13 +49,10 @@ header h1{
     background-color: rgba(255, 255, 255, 0.155);
 }
 .Actions{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 35px;
+    text-align: center;
 }
-#User_Actions{
-    font-size: 1.5em;
+.User_Actions{
+    font-size: 1.3em;
     font-weight: 550;
     letter-spacing: 2.5px;
 }
@@ -72,8 +69,8 @@ header h1{
     display: flex;
 }
 .Color{
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     border-radius: 100%;
     cursor: pointer;
     margin: 5px;

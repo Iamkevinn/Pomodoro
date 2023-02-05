@@ -18,14 +18,14 @@ function ChangeColor(){
 var time = document.getElementById('Time_Pomodoro');
 var minutes = document.getElementById('Minutes');
 var seconds = document.getElementById('Seconds');
-var counter = document.getElementById('Counter');
+var counterPomodoro = document.getElementById('CounterPomodoro');
 var IconPause = document.getElementById('PauseIcon');
 var click = 0;
 var intervalminutes;
 var intervalseconds;
-var secondsvar = 59;
-var minutesvar = 23;
-
+var secondsvar = 5;
+var minutesvar = 0;
+var counter = 0;
 function User_Click(){
 
     click++;
@@ -44,20 +44,37 @@ function User_Click(){
             } else {
                 seconds.textContent = secondsvar--;
             }
+
+            if(secondsvar < "00" && minutesvar <= "00"){
+                clearInterval(intervalseconds);
+                counterPomodoro.textContent = counter++;
+            }
+            
             if(secondsvar < "00"){
+
                 secondsvar = 59;
+
                 if(minutesvar < 10){
+
                     minutes.textContent = "0" + minutesvar--;
-                } else {
+
+                } else if(minutesvar <= "00"){
+
+                    minutes.textContent = "00";
+
+                }
+                 else {
+
                     minutes.textContent = minutesvar--;
                 }
+
             }
+
+
         },1000)
 
 
-    } else if(click == 2){
-        
-        clearInterval(intervalminutes);
+    } else if(click == 2){        
         clearInterval(intervalseconds);
         IconPause.style.display = "flex";
         click = 0;
