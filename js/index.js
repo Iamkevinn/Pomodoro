@@ -26,10 +26,10 @@ var click = 0;
 var intervalminutes;
 var intervalseconds;
 
-var secondsvarpomodoro = 5;
-var minutesvarpomodoro = 0;
-var secondsvarbreak = 3;
-var minutesvarbreak = 0;
+var secondsvarpomodoro = 59;
+var minutesvarpomodoro = 23;
+var secondsvarbreak = 59;
+var minutesvarbreak = 4;
 
 var counterpomodorovar = 0;
 var counterbreakvar = 0;
@@ -39,7 +39,7 @@ var estaenpomodoro = false;
 function Break(){
     estaenbreak = true;
         if(counterpomodorovar == 4){
-            secondsvarbreak = 15;
+            minutesvarbreak = 20;
         }
         time.style.opacity = "1";
         time.style.backgroundColor = "transparent";
@@ -60,7 +60,7 @@ function Break(){
                 counterBreak.textContent = counterbreakvar;
                 if(counterpomodorovar == 4 && counterbreakvar == 4){
                     counterbreakvar = 0;
-                    counterBreak.textContent = counterBreak;
+                    counterBreak.textContent = counterbreakvar;
                     counterpomodorovar = 0;
                     counterPomodoro.textContent = counterpomodorovar;
                 }
@@ -118,7 +118,7 @@ function Pomodoro(){
             } 
             if(secondsvarpomodoro < "00"){
 
-                secondsvarpomodoro = 9;
+                secondsvarpomodoro = 2;
 
                 if(minutesvarpomodoro < 10){
 
