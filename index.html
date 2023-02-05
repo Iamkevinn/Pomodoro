@@ -7,19 +7,40 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/index.css">
     <link href="https://api.fontshare.com/v2/css?f[]=manrope@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Pomodoro</title>
 </head>
 <body id="body">
     <header>
-        <h1>Pomodoro</h1>
+        <h1>Time - Pomodoro</h1>
     </header>
 
     <div class="Time">
-        <div class="Time_Border">
-            <span id="Time_Pomodoro">00:00</span>
+        <div class="Time_Border" onclick="User_Click()" id="Time_Pomodoro">
+
+            <span class="Text">
+
+                <span id="Minutes">
+                    24
+                </span>
+
+                <span>:</span>
+                
+                <span id="Seconds">
+                    59
+                </span>
+            </span>
+
+        </div>
+        <div class="IconPause">
+            <span id="PauseIcon" class="material-symbols-outlined">pause</span>
         </div>
     </div>
     
+    <div class="Actions">
+        <span id="User_Actions">Pomodoro: <span id="Counter">0</span> </span>
+    </div>
+
     <div class="Colors">
         <div class="Row">
             <div onclick="ChangeColor()" class="Color" id="Color1"></div>
