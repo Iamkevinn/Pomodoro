@@ -34,10 +34,10 @@ var minutesvarbreak = 0;
 var counterpomodorovar = 0;
 var counterbreakvar = 0;
 
-var controlbreak = false;
-var controlPomodoro = true;
+var estaenbreak = false;
+var estaenpomodoro = false;
 function Break(){
-    controlbreak = false;
+    estaenbreak = true;
         if(counterpomodorovar == 4){
             secondsvarbreak = 15;
         }
@@ -64,7 +64,7 @@ function Break(){
                     counterpomodorovar = 0;
                     counterPomodoro.textContent = counterpomodorovar;
                 }
-                controlPomodoro=true;
+                estaenbreak = false;
                 Pomodoro();
             }
 
@@ -94,7 +94,10 @@ function Break(){
 
 
 function Pomodoro(){
-    controlPomodoro = false;
+    estaenpomodoro = true;
+    if(click == 1 || estaenpomodoro == true){
+
+
         time.style.opacity = "1";
         time.style.backgroundColor = "transparent";
         IconPause.style.display = "none";
@@ -110,7 +113,7 @@ function Pomodoro(){
                 clearInterval(intervalseconds);
                 counterpomodorovar++;
                 counterPomodoro.textContent = counterpomodorovar;
-                controlbreak = true;
+                estaenpomodoro = false;
                 Break();
             } 
             if(secondsvarpomodoro < "00"){
@@ -132,10 +135,11 @@ function Pomodoro(){
 
             }
         },1000)
+    }
 }
 function Pause(){
     clearInterval(intervalseconds);
-
+    click = 0;
     IconPause.style.display = "flex";
     time.style.opacity = "0.3";
     time.style.backgroundColor = "rgba(255, 255, 255, 0.07)";
@@ -143,20 +147,21 @@ function Pause(){
 
 
 clickButton.addEventListener("click", function() {
+    click++;
   if (firstclick) {
     // Este es el primer clic en el botón
         Pomodoro();
         firstclick = false;
     // Aquí va el código que quieres ejecutar en el primer clic
-  } else {
+  } else if(click == 1) {
     // Este no es el primer clic en el botón
     // Aquí va el código que quieres ejecutar en los clics subsiguientes
-    if(controlPomodoro == true && controlbreak == false){
+    if(estaenpomodoro == true){
         Pomodoro();
-    } else if(controlPomodoro == false && controlbreak == true){
+    } else if(estaenbreak == true){
         Break();
-    } else{
-        Pause();
-    }
+    } 
+  } else if (click == 2){
+    Pause();
   }
 });
