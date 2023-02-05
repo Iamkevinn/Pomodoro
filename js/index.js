@@ -8,65 +8,81 @@ function ChangeColor(){
             if(i == coloruser){
                 var elementstyle = window.getComputedStyle(coloruser);
                 var elementcolor = elementstyle.getPropertyValue('background-color');
-                console.log(elementcolor)
                 bodytag.style.backgroundColor = `${elementcolor}`;       
             }
         }
     })   
 }
 
+let firstclick = true;
+let clickButton = document.getElementById('Time_Pomodoro');
 var time = document.getElementById('Time_Pomodoro');
 var minutes = document.getElementById('Minutes');
 var seconds = document.getElementById('Seconds');
 var counterPomodoro = document.getElementById('CounterPomodoro');
+var counterBreak = document.getElementById('CounterBreak');
 var IconPause = document.getElementById('PauseIcon');
 var click = 0;
 var intervalminutes;
 var intervalseconds;
-var secondsvar = 5;
-var minutesvar = 0;
-var counter = 0;
 
+var secondsvarpomodoro = 5;
+var minutesvarpomodoro = 0;
+var secondsvarbreak = 3;
+var minutesvarbreak = 0;
+
+var counterpomodorovar = 0;
+var counterbreakvar = 0;
+
+var controlbreak = false;
+var controlPomodoro = true;
 function Break(){
-    clearInterval(intervalseconds);
-    counter++;
-    counterPomodoro.textContent = counter;
-}
-function Pomodoro(){
-    if(click == 1){
-
+    controlbreak = false;
+        if(counterpomodorovar == 4){
+            secondsvarbreak = 15;
+        }
         time.style.opacity = "1";
         time.style.backgroundColor = "transparent";
         IconPause.style.display = "none";
 
         intervalseconds = setInterval(function(){
-        
-            if(secondsvar < 10){
-                seconds.textContent = "0" + secondsvar--;
+
+            if(secondsvarbreak < 10){
+                seconds.textContent = "0" + secondsvarbreak--;
             } else {
-                seconds.textContent = secondsvar--;
+                seconds.textContent = secondsvarbreak--;
             }
 
-            if(secondsvar < "00" && minutesvar <= "00"){
-                Break();
+
+            if(secondsvarbreak < "00" && minutesvarbreak <= "00"){
+                clearInterval(intervalseconds);
+                counterbreakvar++;
+                counterBreak.textContent = counterbreakvar;
+                if(counterpomodorovar == 4 && counterbreakvar == 4){
+                    counterbreakvar = 0;
+                    counterBreak.textContent = counterBreak;
+                    counterpomodorovar = 0;
+                    counterPomodoro.textContent = counterpomodorovar;
+                }
+                controlPomodoro=true;
+                Pomodoro();
             }
 
-            if(secondsvar < "00"){
+            if(secondsvarbreak < "00"){
 
-                secondsvar = 59;
+                secondsvarbreak = 2;
 
-                if(minutesvar < 10){
+                if(minutesvarbreak < 10){
 
-                    minutes.textContent = "0" + minutesvar--;
+                    minutes.textContent = "0" + minutesvarbreak--;
 
-                } else if(minutesvar <= "00"){
+                }
+                if(minutesvarbreak <= "00"){
 
                     minutes.textContent = "00";
 
-                }
-                 else {
-
-                    minutes.textContent = minutesvar--;
+                }else {
+                    minutes.textContent = minutesvarbreak--;
                 }
 
             }
@@ -74,22 +90,73 @@ function Pomodoro(){
 
         },1000)
 
+}
 
-    } else if(click == 2){        
-        Pause();
-    }
+
+function Pomodoro(){
+    controlPomodoro = false;
+        time.style.opacity = "1";
+        time.style.backgroundColor = "transparent";
+        IconPause.style.display = "none";
+
+        intervalseconds = setInterval(function(){
+            if(secondsvarpomodoro < 10){
+                seconds.textContent = "0" + secondsvarpomodoro--;
+            } else {
+                seconds.textContent = secondsvarpomodoro--;
+            }
+
+            if(secondsvarpomodoro < "00" && minutesvarpomodoro <= "00"){
+                clearInterval(intervalseconds);
+                counterpomodorovar++;
+                counterPomodoro.textContent = counterpomodorovar;
+                controlbreak = true;
+                Break();
+            } 
+            if(secondsvarpomodoro < "00"){
+
+                secondsvarpomodoro = 9;
+
+                if(minutesvarpomodoro < 10){
+
+                    minutes.textContent = "0" + minutesvarpomodoro--;
+
+                }
+                if(minutesvarpomodoro <= "00"){
+
+                    minutes.textContent = "00";
+
+                }else {
+                    minutes.textContent = minutesvarpomodoro--;
+                }
+
+            }
+        },1000)
 }
 function Pause(){
     clearInterval(intervalseconds);
+
     IconPause.style.display = "flex";
-    click = 0;
     time.style.opacity = "0.3";
     time.style.backgroundColor = "rgba(255, 255, 255, 0.07)";
 }
-function User_Click(){
 
-    click++;
 
-    Pomodoro();
-
-}
+clickButton.addEventListener("click", function() {
+  if (firstclick) {
+    // Este es el primer clic en el botón
+        Pomodoro();
+        firstclick = false;
+    // Aquí va el código que quieres ejecutar en el primer clic
+  } else {
+    // Este no es el primer clic en el botón
+    // Aquí va el código que quieres ejecutar en los clics subsiguientes
+    if(controlPomodoro == true && controlbreak == false){
+        Pomodoro();
+    } else if(controlPomodoro == false && controlbreak == true){
+        Break();
+    } else{
+        Pause();
+    }
+  }
+});
