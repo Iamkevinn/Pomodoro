@@ -29,8 +29,8 @@ var counter = 0;
 
 function Break(){
     clearInterval(intervalseconds);
-    counterPomodoro.textContent = counter++;
-    console.log(counter);
+    counter++;
+    counterPomodoro.textContent = counter;
 }
 function Pomodoro(){
     if(click == 1){
