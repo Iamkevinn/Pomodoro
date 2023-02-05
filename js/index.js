@@ -26,11 +26,13 @@ var intervalseconds;
 var secondsvar = 5;
 var minutesvar = 0;
 var counter = 0;
-function User_Click(){
 
-    click++;
-
-
+function Break(){
+    clearInterval(intervalseconds);
+    counterPomodoro.textContent = counter++;
+    console.log(counter);
+}
+function Pomodoro(){
     if(click == 1){
 
         time.style.opacity = "1";
@@ -46,10 +48,9 @@ function User_Click(){
             }
 
             if(secondsvar < "00" && minutesvar <= "00"){
-                clearInterval(intervalseconds);
-                counterPomodoro.textContent = counter++;
+                Break();
             }
-            
+
             if(secondsvar < "00"){
 
                 secondsvar = 59;
@@ -75,11 +76,20 @@ function User_Click(){
 
 
     } else if(click == 2){        
-        clearInterval(intervalseconds);
-        IconPause.style.display = "flex";
-        click = 0;
-        time.style.opacity = "0.3";
-        time.style.backgroundColor = "rgba(255, 255, 255, 0.07)";
-
+        Pause();
     }
+}
+function Pause(){
+    clearInterval(intervalseconds);
+    IconPause.style.display = "flex";
+    click = 0;
+    time.style.opacity = "0.3";
+    time.style.backgroundColor = "rgba(255, 255, 255, 0.07)";
+}
+function User_Click(){
+
+    click++;
+
+    Pomodoro();
+
 }
