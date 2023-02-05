@@ -70,7 +70,7 @@ function Break(){
 
             if(secondsvarbreak < "00"){
 
-                secondsvarbreak = 2;
+                secondsvarbreak = 59;
 
                 if(minutesvarbreak < 10){
 
@@ -118,7 +118,7 @@ function Pomodoro(){
             } 
             if(secondsvarpomodoro < "00"){
 
-                secondsvarpomodoro = 2;
+                secondsvarpomodoro = 59;
 
                 if(minutesvarpomodoro < 10){
 
