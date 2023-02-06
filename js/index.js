@@ -25,7 +25,7 @@ var counterbreakvar = 0;
 
 var estaenbreak = false;
 var estaenpomodoro = false;
-
+const audio = new Audio('img/notification');
 function ChangeColor(){
     document.addEventListener('click',function(event){
         var coloruser = document.getElementById(`${event.target.id}`);
@@ -61,6 +61,7 @@ function Break(){
                 minutes.textContent = "0" + `${minutesvarbreak}`;
                 seconds.textContent = "0" + `${secondsvarbreak}`;
                 clearInterval(intervalseconds);
+                audio.play();
                 counterbreakvar++;
                 counterBreak.textContent = counterbreakvar;
                 estaenbreak = false;
@@ -121,6 +122,7 @@ function Pomodoro(){
                 minutes.textContent = "0" + `${minutesvarpomodoro}`;
                 seconds.textContent = "0" + `${secondsvarpomodoro}`;
                 clearInterval(intervalseconds);
+                audio.play();
                 counterpomodorovar++;
                 counterPomodoro.textContent = counterpomodorovar;
                 estaenpomodoro = false;
