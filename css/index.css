@@ -31,6 +31,7 @@ header h1{
     display: none;
 }
 #Time_Pomodoro{
+    background-color:rgba(0, 0, 255, 0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,13 +41,13 @@ header h1{
     height: 200px;
     cursor: pointer;
 }
+#Time_Pomodoro:hover{
+    background-color: rgba(170, 170, 170, 0.116);
+}
 .Text{
     color: rgba(255, 255, 255, 0.935);
     font-size: 3.5em;
     font-weight: 600;
-}
-#Time_Pomodoro:hover{
-    background-color: rgba(255, 255, 255, 0.155);
 }
 .Actions{
     text-align: center;
