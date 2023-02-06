@@ -1,5 +1,30 @@
 var colors = document.getElementsByClassName('Color');
 var bodytag = document.getElementById('body');
+let firstclick = true;
+let clickButton = document.getElementById('Time_Pomodoro');
+var time = document.getElementById('Time_Pomodoro');
+var minutes = document.getElementById('Minutes');
+var seconds = document.getElementById('Seconds');
+var counterPomodoro = document.getElementById('CounterPomodoro');
+var counterBreak = document.getElementById('CounterBreak');
+var IconPause = document.getElementById('PauseIcon');
+var click = 0;
+var intervalminutes;
+var intervalseconds;
+var pomodorospan = document.getElementById('PomodoroSpan');
+var breakspan = document.getElementById('BreakSpan');
+
+var secondsvarpomodoro = 59;
+var minutesvarpomodoro = 24;
+
+var secondsvarbreak = 59;
+var minutesvarbreak = 4;
+
+var counterpomodorovar = 0;
+var counterbreakvar = 0;
+
+var estaenbreak = false;
+var estaenpomodoro = false;
 
 function ChangeColor(){
     document.addEventListener('click',function(event){
@@ -14,32 +39,14 @@ function ChangeColor(){
     })   
 }
 
-let firstclick = true;
-let clickButton = document.getElementById('Time_Pomodoro');
-var time = document.getElementById('Time_Pomodoro');
-var minutes = document.getElementById('Minutes');
-var seconds = document.getElementById('Seconds');
-var counterPomodoro = document.getElementById('CounterPomodoro');
-var counterBreak = document.getElementById('CounterBreak');
-var IconPause = document.getElementById('PauseIcon');
-var click = 0;
-var intervalminutes;
-var intervalseconds;
-
-var secondsvarpomodoro = 59;
-var minutesvarpomodoro = 23;
-var secondsvarbreak = 59;
-var minutesvarbreak = 4;
-
-var counterpomodorovar = 0;
-var counterbreakvar = 0;
-
-var estaenbreak = false;
-var estaenpomodoro = false;
 function Break(){
     estaenbreak = true;
-        if(counterpomodorovar == 4){
-            minutesvarbreak = 20;
+
+    if(click == 1 && estaenbreak == true){
+        breakspan.style.fontWeight = 'bold';
+        pomodorospan.style.fontWeight = '550';
+        if(counterpomodorovar == 4 ){
+            minutesvarbreak = 19;
         }
         time.style.opacity = "1";
         time.style.backgroundColor = "transparent";
@@ -47,93 +54,97 @@ function Break(){
 
         intervalseconds = setInterval(function(){
 
-            if(secondsvarbreak < 10){
-                seconds.textContent = "0" + secondsvarbreak--;
-            } else {
-                seconds.textContent = secondsvarbreak--;
-            }
+            seconds.textContent = secondsvarbreak;
+            minutes.textContent = minutesvarbreak;
 
-
-            if(secondsvarbreak < "00" && minutesvarbreak <= "00"){
+            if(secondsvarbreak <= 0 && minutesvarbreak <= 0){
+                minutes.textContent = "0" + `${minutesvarbreak}`;
+                seconds.textContent = "0" + `${secondsvarbreak}`;
                 clearInterval(intervalseconds);
                 counterbreakvar++;
                 counterBreak.textContent = counterbreakvar;
-                if(counterpomodorovar == 4 && counterbreakvar == 4){
-                    counterbreakvar = 0;
-                    counterBreak.textContent = counterbreakvar;
-                    counterpomodorovar = 0;
-                    counterPomodoro.textContent = counterpomodorovar;
-                }
                 estaenbreak = false;
                 Pomodoro();
-            }
-
-            if(secondsvarbreak < "00"){
-
                 secondsvarbreak = 59;
-
+                minutesvarbreak = 4;
+            } else{
+                if(secondsvarbreak< 0){
+                    secondsvarbreak = 59;
+                    minutesvarbreak--;
+                }
                 if(minutesvarbreak < 10){
-
-                    minutes.textContent = "0" + minutesvarbreak--;
-
-                }
-                if(minutesvarbreak <= "00"){
-
-                    minutes.textContent = "00";
-
+                    minutes.textContent = "0" + `${minutesvarbreak}`;
                 }else {
-                    minutes.textContent = minutesvarbreak--;
+                    minutes.textContent = `${minutesvarbreak}`;
                 }
-
+                if(secondsvarbreak< 10){
+                    seconds.textContent = "0" + `${secondsvarbreak}`;
+                } else {
+                    seconds.textContent = `${secondsvarbreak}`;
+                }
+                secondsvarbreak--;
             }
-
 
         },1000)
-
+    }
 }
 
+var wait;
 
 function Pomodoro(){
     estaenpomodoro = true;
-    if(click == 1 || estaenpomodoro == true){
 
+    if(click == 1 && estaenpomodoro == true){
 
+        if(counterbreakvar == 4 && counterpomodorovar == 4){
+            wait = setInterval(function() {
+                counterbreakvar = 0;
+                counterpomodorovar = 0;
+                counterBreak.textContent = counterbreakvar;
+                counterPomodoro.textContent = counterpomodorovar;
+                clearInterval(wait);
+            }, 1000);
+        }
+        breakspan.style.fontWeight = '550';
+        pomodorospan.style.fontWeight = 'bold';
         time.style.opacity = "1";
         time.style.backgroundColor = "transparent";
         IconPause.style.display = "none";
 
-        intervalseconds = setInterval(function(){
-            if(secondsvarpomodoro < 10){
-                seconds.textContent = "0" + secondsvarpomodoro--;
-            } else {
-                seconds.textContent = secondsvarpomodoro--;
-            }
 
-            if(secondsvarpomodoro < "00" && minutesvarpomodoro <= "00"){
+        intervalseconds = setInterval(function(){
+
+            seconds.textContent = secondsvarpomodoro;
+            minutes.textContent = minutesvarpomodoro;
+
+            if(secondsvarpomodoro <= 0 && minutesvarpomodoro <= 0){
+                minutes.textContent = "0" + `${minutesvarpomodoro}`;
+                seconds.textContent = "0" + `${secondsvarpomodoro}`;
                 clearInterval(intervalseconds);
                 counterpomodorovar++;
                 counterPomodoro.textContent = counterpomodorovar;
                 estaenpomodoro = false;
                 Break();
-            } 
-            if(secondsvarpomodoro < "00"){
-
                 secondsvarpomodoro = 59;
-
+                minutesvarpomodoro = 24;
+            } else{
+                if(secondsvarpomodoro < 0){
+                    secondsvarpomodoro = 59;
+                    minutesvarpomodoro--;
+                }
                 if(minutesvarpomodoro < 10){
-
-                    minutes.textContent = "0" + minutesvarpomodoro--;
-
-                }
-                if(minutesvarpomodoro <= "00"){
-
-                    minutes.textContent = "00";
-
+                    minutes.textContent = "0" + `${minutesvarpomodoro}`;
                 }else {
-                    minutes.textContent = minutesvarpomodoro--;
+                    minutes.textContent = `${minutesvarpomodoro}`;
                 }
-
+                if(secondsvarpomodoro < 10){
+                    seconds.textContent = "0" + `${secondsvarpomodoro}`;
+                } else {
+                    seconds.textContent = `${secondsvarpomodoro}`;
+                }
+                secondsvarpomodoro--;
             }
+
         },1000)
     }
 }
